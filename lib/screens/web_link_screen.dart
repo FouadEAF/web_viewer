@@ -53,16 +53,17 @@ class _WebLinkScreenState extends State<WebLinkScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Web Link'),
+        backgroundColor: const Color.fromARGB(255, 22, 22, 22),
+        title: const Text('Clementine\'s Cafe', style: TextStyle(color: Colors.white)),
         actions: [
           IconButton(
             tooltip: 'Reload',
-            icon: const Icon(Icons.refresh),
+            icon: const Icon(Icons.refresh, color:  Color.fromRGBO(195, 28, 36, 1)),
             onPressed: () => _controller.reload(),
           ),
           IconButton(
             tooltip: 'Open home URL',
-            icon: const Icon(Icons.home_outlined),
+            icon: const Icon(Icons.home_outlined, color:  Color.fromRGBO(195, 28, 36, 1)),
             onPressed: () => _controller.loadRequest(Uri.parse(login)),
           ),
         ],
@@ -80,6 +81,7 @@ class _WebLinkScreenState extends State<WebLinkScreen> {
         child: WebViewWidget(controller: _controller),
       ),
       bottomNavigationBar: BottomAppBar(
+        color: const Color.fromARGB(255, 22, 22, 22),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceAround,
           children: [
