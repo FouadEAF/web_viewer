@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:webview_flutter/webview_flutter.dart';
+import 'package:connectivity_plus/connectivity_plus.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 import '../api/link.dart';
+import 'offline_screen.dart';
 
 class WebLinkScreen extends StatefulWidget {
   const WebLinkScreen({super.key});
@@ -15,10 +18,26 @@ class _WebLinkScreenState extends State<WebLinkScreen> {
   int _progress = 0;
   bool _canGoBack = false;
   bool _canGoForward = false;
+  bool _isOffline = false;
+  late final Stream<List<ConnectivityResult>> _connectivityStream;
 
   @override
   void initState() {
     super.initState();
+    _connectivityStream = Connectivity().onConnectivityChanged;
+    _connectivityStream.listen((results) {
+      final offline = results.contains(ConnectivityResult.none);
+      if (mounted && offline != _isOffline) {
+        setState(() {
+          _isOffline = offline;
+        });
+        if (!offline) {
+          _controller.reload();
+        }
+      }
+    });
+
+    _checkInitialConnectivity();
 
     _controller = WebViewController()
       ..setJavaScriptMode(JavaScriptMode.unrestricted)
@@ -33,9 +52,25 @@ class _WebLinkScreenState extends State<WebLinkScreen> {
             await _updateNavAvailability();
           },
           onProgress: (p) => setState(() => _progress = p),
+          onWebResourceError: (error) {
+            if (mounted) {
+              setState(() {
+                _isOffline = true;
+              });
+            }
+          },
         ),
       )
       ..loadRequest(Uri.parse(login));
+  }
+
+  Future<void> _checkInitialConnectivity() async {
+    final current = await Connectivity().checkConnectivity();
+    if (mounted) {
+      setState(() {
+        _isOffline = current == ConnectivityResult.none;
+      });
+    }
   }
 
   Future<void> _updateNavAvailability() async {
@@ -49,12 +84,83 @@ class _WebLinkScreenState extends State<WebLinkScreen> {
     }
   }
 
+  Future<void> _openExternal(String url) async {
+    final uri = Uri.parse(url);
+    if (!await launchUrl(uri)) {
+      await launchUrl(uri, webOnlyWindowName: '_blank');
+    }
+  }
+
+  void _showAboutDialog() {
+    showDialog(
+      context: context,
+      builder: (context) {
+        final titleStyle = Theme.of(context).textTheme.titleLarge?.copyWith(fontWeight: FontWeight.w700);
+        final labelStyle = Theme.of(context).textTheme.bodyMedium?.copyWith(color: Colors.black54);
+        final valueStyle = Theme.of(context).textTheme.bodyMedium;
+
+        return AlertDialog(
+          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
+          title: Text('About', style: titleStyle),
+          contentPadding: const EdgeInsets.fromLTRB(24, 8, 24, 0),
+          content: Column(
+            mainAxisSize: MainAxisSize.min,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text("Clementine's Cafe", style: Theme.of(context).textTheme.titleMedium),
+              const SizedBox(height: 6),
+              Text('Created by EAF microservice', style: valueStyle),
+              const SizedBox(height: 14),
+              Text('Website', style: labelStyle),
+              const SizedBox(height: 4),
+              InkWell(
+                onTap: () => _openExternal('https://fouadeaf.github.io/EAF-microservice/'),
+                child: const Text(
+                  'https://fouadeaf.github.io/EAF-microservice/',
+                  style: TextStyle(color: Colors.blue, decoration: TextDecoration.underline),
+                ),
+              ),
+              const SizedBox(height: 14),
+              Text('Phone', style: labelStyle),
+              const SizedBox(height: 4),
+              Text('+212 645 994 904\n+212 727 593 647', style: valueStyle),
+              const SizedBox(height: 8),
+              Text('Email', style: labelStyle),
+              const SizedBox(height: 4),
+              Text('EAF.microservice@gmail.com', style: valueStyle),
+            ],
+          ),
+          actionsPadding: const EdgeInsets.fromLTRB(16, 0, 16, 12),
+          actions: [
+            TextButton(
+              onPressed: () => Navigator.of(context).pop(),
+              child: const Text('Close'),
+            ),
+          ],
+        );
+      },
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
+    if (_isOffline) {
+      return OfflineScreen(onRetry: () async {
+        final current = await Connectivity().checkConnectivity();
+        if (current != ConnectivityResult.none) {
+          setState(() => _isOffline = false);
+          _controller.loadRequest(Uri.parse(login));
+        }
+      });
+    }
+
     return Scaffold(
       appBar: AppBar(
         backgroundColor: const Color.fromARGB(255, 22, 22, 22),
-        title: const Text('Clementine\'s Cafe', style: TextStyle(color: Colors.white)),
+        title: GestureDetector(
+          onTap: _showAboutDialog,
+          child: const Text('Clementine\'s Cafe', style: TextStyle(color: Colors.white)),
+        ),
         actions: [
           IconButton(
             tooltip: 'Reload',

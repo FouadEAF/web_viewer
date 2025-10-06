@@ -63,3 +63,5 @@ flutter build ios --release
 - Address: 17 place de la liberté (Place Chennevières), 78700 Conflans‑Sainte‑Honorine
 
 For the latest menu, categories, and information, visit the website: [clementinescafe.fr](https://clementinescafe.fr/)
+
+Developped by [EAF microservice](https://fouadeaf.github.io/EAF-microservice/)
