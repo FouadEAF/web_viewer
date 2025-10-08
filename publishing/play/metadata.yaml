@@ -1,0 +1,46 @@
+# Google Play metadata template
+owner_email: EAF.microservice@gmail.com
+developer_account_id: "5648923186607360521"
+
+app:
+  package_name: com.eafmicroservice.clementinecafe # confirmed
+  app_name: "Clementine’s Cafe"
+  short_description: "Clementine’s Cafe"
+  full_description: |
+    # 4-6 paragraphs describing your app, features, and value
+  category: APPLICATION # or GAME
+  subcategory: FOOD_AND_DRINK
+  contains_ads: false
+  target_audience_under_13: false
+  countries: ["WW"] # or list specific ISO codes
+
+listings:
+  language: en-US
+  promo_video_url: ""
+  privacy_policy_url: ""
+  contact_email: ""
+  contact_website: ""
+
+assets:
+  icon_1024: path/to/icon-1024.png
+  feature_graphic_1024x500: path/to/feature-graphic-1024x500.png
+  screenshots_phone: []
+  screenshots_tablet7: []
+  screenshots_tablet10: []
+
+signing:
+  use_play_app_signing: true
+  upload_keystore:
+    path: android/upload-keystore.jks
+    alias: upload
+    store_password: ""
+    key_password: ""
+
+data_safety:
+  collects_data: false
+  shares_data: false
+  sdks: []
+
+release:
+  track: internal # internal, closed, open, production
+  rollout_percentage: 100

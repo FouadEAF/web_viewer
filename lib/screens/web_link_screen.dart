@@ -47,6 +47,15 @@ class _WebLinkScreenState extends State<WebLinkScreen> {
           onUrlChange: (_) async {
             await _updateNavAvailability();
           },
+          onNavigationRequest: (request) async {
+            final uri = Uri.parse(request.url);
+            if (uri.scheme != 'http' && uri.scheme != 'https') {
+              // Open non-web schemes externally (tel:, mailto:, etc.)
+              await _openExternal(request.url);
+              return NavigationDecision.prevent;
+            }
+            return NavigationDecision.navigate;
+          },
           onPageFinished: (_) async {
             setState(() => _progress = 100);
             await _updateNavAvailability();

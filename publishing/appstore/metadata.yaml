@@ -1,0 +1,41 @@
+# Apple App Store metadata template
+owner_apple_id_email: ""
+team_name: ""
+team_id: "" # Found in App Store Connect > Membership
+
+app:
+  bundle_id: com.eafmicroservice.clementinescafe # TODO: change to final bundle id
+  app_name: "Clementine’s Cafe"
+  subtitle: "" # <= 30 chars
+  description: |
+    # 4-6 paragraphs describing your app, features, and value
+  primary_category: Food & Drink
+  secondary_category: Food & Drink
+  keywords: []
+  privacy_policy_url: "https://fouadeaf.github.io/EAF-microservice/privacy-policy.html"
+  marketing_url: ""
+  support_url: "https://fouadeaf.github.io/EAF-microservice/"
+  age_rating: 4+ # see rating questionnaire
+  content_rights: "" # if includes third-party content
+
+assets:
+  icon_1024: assets/logo.webp
+  screenshots_6_7: []   # 1290x2796 (iPhone 15 Pro Max) or accepted sizes
+  screenshots_6_5: []   # 1242x2688 / 1284x2778 etc.
+  screenshots_5_5: []   # 1242x2208 etc.
+  screenshots_ipad_12_9: [] # Add after testing
+
+signing:
+  signing_method: automatic # automatic | manual
+  profiles:
+    distribution_profile: "" # if manual
+  certificates:
+    distribution_p12: "android/upload-keystore.jks" # path to .p12
+    p12_password: "El@2bi/Ch0ukl@7"
+
+release:
+  release_type: testflight # testflight | manual | automatic
+  phased_release: true
+  export_compliance:
+    uses_encryption: false
+    is_exempt: true
