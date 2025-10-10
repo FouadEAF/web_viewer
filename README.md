@@ -1,8 +1,54 @@
-## Clementine’s Cafe – Mobile Web Viewer
+## Clementine's Cafe – Mobile Web Viewer
 
-A simple Flutter app that wraps and optimizes the browsing experience for the Clementine’s Cafe website. It loads the live site in a secure in‑app WebView so customers can explore the menu, read information, and place orders more conveniently on mobile.
+### App Store Descriptions
 
-Source: [Clementine’s Cafe website](https://clementinescafe.fr/)
+#### Short Description (80 characters max)
+**Clementine's Cafe - Mobile Web Viewer**
+
+#### Full Description
+
+**Clementine's Cafe - Mobile Web Viewer**
+
+Experience Clementine's Cafe directly on your mobile device with this native app that provides fast, seamless access to the restaurant's website.
+
+**Key Features:**
+• **Native Mobile Experience** - Browse the cafe's website in a smooth, app-like interface
+• **Fast Loading** - Optimized WebView technology for quick page loads
+• **Offline Detection** - Smart connectivity monitoring with retry functionality
+• **Mobile-First Design** - Clean, intuitive interface designed for mobile users
+• **Cross-Platform** - Available on both Android and iOS devices
+
+**What You'll Find:**
+• Complete menu with categories and pricing
+• Restaurant information and contact details
+• Location and hours of operation
+• Latest updates and special offers
+
+**About Clementine's Cafe:**
+Located at 17 place de la liberté (Place Chennevières) in Conflans-Sainte-Honorine, Clementine's Cafe offers a welcoming atmosphere with delicious food and beverages.
+
+**Contact Information:**
+• Phone: 01 39 19 95 81
+• Email: contact@clementinescafe.fr
+• Website: clementinescafe.fr
+
+**Technical Features:**
+• Built with Flutter for optimal performance
+• Automatic connectivity monitoring
+• Secure browsing with HTTPS support
+• Regular updates to ensure compatibility
+
+Download now to have Clementine's Cafe at your fingertips!
+
+---
+
+*Developed by EAF microservice - Your trusted mobile development partner.*
+
+**Keywords:** restaurant, cafe, menu, food, dining, Conflans-Sainte-Honorine, mobile app, web viewer
+
+---
+
+Source: [Clementine's Cafe website](https://clementinescafe.fr/)
 
 ### Features
 - **In‑app WebView**: Fast loading of the live site in a native container
